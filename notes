@@ -1,0 +1,3 @@
+Screen information are queried by applications using the FBIOGET_FSCREENINFO
+and FBIOGET_VSCREENINFO ioctls. Those ioctls take a pointer to a
+fb_fix_screeninfo and fb_var_screeninfo structure respectively.
