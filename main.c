@@ -4,46 +4,56 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
-
-struct fb_fix_screeninfo finfo;
-struct fb_var_screeninfo vinfo;
-
-uint8_t *fbp;
-
-inline uint32_t pixel_color(uint8_t r, uint8_t g, uint8_t b, struct fb_var_screeninfo *vinfo)
-{
-	return (r<<vinfo->red.offset) | (g<<vinfo->green.offset) | (b<<vinfo->blue.offset);
-}
-
-void get_screen_info()
-{
-	int fb_fd = open("/dev/fb0",O_RDWR);
-
-	//Get variable screen information
-	ioctl(fb_fd, FBIOGET_VSCREENINFO, &vinfo);
-	vinfo.grayscale=0;
-	vinfo.bits_per_pixel=32;
-	ioctl(fb_fd, FBIOPUT_VSCREENINFO, &vinfo);
-	ioctl(fb_fd, FBIOGET_VSCREENINFO, &vinfo);
-
-	ioctl(fb_fd, FBIOGET_FSCREENINFO, &finfo);
-
-	long screensize = vinfo.yres_virtual * finfo.line_length;
-
-	fbp= mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
-}
+#include "graphics.h"
 
 int main()
 {
 	int x,y;
 	get_screen_info();
 
-	for (x=0;x<vinfo.xres;x++)
-		for (y=0;y<vinfo.yres;y++)
-		{
-			long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (y+vinfo.yoffset) * finfo.line_length;
-			*((uint32_t*)(fbp + location)) = pixel_color(0xFF,0x00,0xFF, &vinfo);
-		}
+	draw_line(1000,100,900,200);
+	draw_line(1000,100,1100,200);
+
+	draw_line(900,200,800,300);
+	draw_line(900,200,900,300);
+	draw_line(900,200,1000,300);
+	draw_line(1100,200,1000,300);
+	draw_line(1100,200,1100,300);
+	draw_line(1100,200,1200,300);
+
+	draw_line(800,300,800,400);
+	draw_line(800,300,900,400);
+	draw_line(900,300,800,400);
+	draw_line(900,300,1100,400);
+	draw_line(1000,300,900,400);
+	draw_line(1000,300,1100,400);
+	draw_line(1100,300,900,400);
+	draw_line(1100,300,1200,400);
+	draw_line(1200,300,1100,400);
+	draw_line(1200,300,1200,400);
+
+	draw_line(800,400,1000,500);
+	draw_line(900,400,1000,500);
+	draw_line(1100,400,1000,500);
+	draw_line(1200,400,1000,500);
+
+	box(1000,100);
+
+	box(900,200);
+	box(1100,200);
+
+	box(800,300);
+	box(900,300);
+	box(1000,300);
+	box(1100,300);
+	box(1200,300);
+
+	box(800,400);
+	box(900,400);
+	box(1100,400);
+	box(1200,400);
+
+	box(1000,500);
 
 	return 0;
 }
