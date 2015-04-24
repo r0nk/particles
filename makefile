@@ -1,2 +1,4 @@
 all:
-	gcc main.c
+	gcc -c main.c
+	gcc -c graphics.c
+	gcc *.o 

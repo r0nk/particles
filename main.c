@@ -9,7 +9,7 @@
 int main()
 {
 	int x,y;
-	get_screen_info();
+	init_graphics();
 
 	draw_line(1000,100,900,200);
 	draw_line(1000,100,1100,200);
