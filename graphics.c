@@ -1,6 +1,7 @@
 #include <linux/fb.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
@@ -78,10 +79,15 @@ void draw_line(int x1,int y1,int x2,int y2)
 	}
 }
 
-void box(int x,int y)
+void box(unsigned int x,unsigned int y)
 {
+	if((x+5>=vinfo.xres) || x<5)
+		return;
+	if((y+5>=vinfo.yres) || y<5)
+		return;
 	cr=0xff;cg=0xff;cb=0xff;
 	draw_rectangle(x-5,y-5,x+5,y+5);
 	cr=0;cg=0;cb=0;
+	draw_rectangle(x-4,y-4,x+4,y+4);
 	draw_rectangle(x-4,y-4,x+4,y+4);
 }

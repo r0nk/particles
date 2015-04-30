@@ -1,59 +1,22 @@
 #include <linux/fb.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include "graphics.h"
+#include "physics.h"
 
 int main()
 {
-	int x,y;
+	int y=0;
 	init_graphics();
-
-	draw_line(1000,100,900,200);
-	draw_line(1000,100,1100,200);
-
-	draw_line(900,200,800,300);
-	draw_line(900,200,900,300);
-	draw_line(900,200,1000,300);
-	draw_line(1100,200,1000,300);
-	draw_line(1100,200,1100,300);
-	draw_line(1100,200,1200,300);
-
-	draw_line(800,300,800,400);
-	draw_line(800,300,900,400);
-	draw_line(900,300,800,400);
-	draw_line(900,300,1100,400);
-	draw_line(1000,300,900,400);
-	draw_line(1000,300,1100,400);
-	draw_line(1100,300,900,400);
-	draw_line(1100,300,1200,400);
-	draw_line(1200,300,1100,400);
-	draw_line(1200,300,1200,400);
-
-	draw_line(800,400,1000,500);
-	draw_line(900,400,1000,500);
-	draw_line(1100,400,1000,500);
-	draw_line(1200,400,1000,500);
-
-	box(1000,100);
-
-	box(900,200);
-	box(1100,200);
-
-	box(800,300);
-	box(900,300);
-	box(1000,300);
-	box(1100,300);
-	box(1200,300);
-
-	box(800,400);
-	box(900,400);
-	box(1100,400);
-	box(1200,400);
-
-	box(1000,500);
+	init_physics();
+	while(1){
+		tick(y++);
+		usleep(20000);
+	}
 
 	return 0;
 }
