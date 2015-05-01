@@ -6,7 +6,7 @@ SRCFILES:= $(shell find -type f -name "*.c")
 
 OBJFILES:= $(patsubst %.c,%.o,$(SRCFILES)) 
 
-PROJ:=ions
+PROJ:=particles
 	
 .PHONY:all clean run
 
