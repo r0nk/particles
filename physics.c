@@ -1,6 +1,7 @@
 #include "ion.h"
 #include "graphics.h"
 #include "physics.h"
+#include "vector.h"
 
 #define N_IONS 2
 
@@ -14,10 +15,6 @@ void init_physics()
 		ions[i].y=0;
 		ions[i].charge=0;
 	}
-}
-
-int lorentz(int q, int v, int E, int B){
-
 }
 
 void tick()
