@@ -2,7 +2,7 @@
 #define VECTOR
 
 struct vector {
-	int x,y,z;
+	double x,y,z;
 };
 
 struct vector cross (struct vector v1, struct vector v2);

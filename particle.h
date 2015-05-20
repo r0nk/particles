@@ -1,12 +1,11 @@
 #ifndef ION
-#define ION
+#define ION 1
 #include "vector.h"
 
 struct particle {
-	int mass;
-	int x;
-	int y;
-	int z;
+	double mass;
+	struct vector l;/* location */
+	struct vector velocity;//gets added after every calc
 };
 
 #endif
