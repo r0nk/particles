@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "calculus.h"
 #include "particle.h"
 #include "physics.h"
 #include "newton.h"
