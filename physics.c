@@ -37,18 +37,18 @@ void velocity(struct particle * p)
 	int i;
 	for(i=0;i<N_IONS;i++){
 		v = gravitation(ions[i],*p);
-		fv = add(v,fv);
+		fv = v_add(v,fv);
 	}
 	/* because f/m=a */
 	fv.x/=p->mass;
 	fv.y/=p->mass;
 	fv.z/=p->mass;
-	p->velocity = add(p->velocity,fv);
+	p->velocity = v_add(p->velocity,fv);
 }
 
 void apply_vel(struct particle * p)
 {
-	p->l = add(p->l,p->velocity);
+	p->l = v_add(p->l,p->velocity);
 }
 
 void tick()

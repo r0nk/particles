@@ -1,5 +1,5 @@
 CFLAGS=-fbuiltin -Wall -Wextra -g 
-LIBS= -lgcc -lreadline
+LIBS= -lgcc -lreadline -lm
 CC=gcc
 
 SRCFILES:= $(shell find -type f -name "*.c")

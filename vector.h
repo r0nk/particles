@@ -7,7 +7,13 @@ struct vector {
 
 struct vector cross (struct vector v1, struct vector v2);
 int dot(struct vector v1, struct vector v2);
-struct vector add(struct vector v1, struct vector v2);
-struct vector v_scalar_mul(int a,struct vector F);
+struct vector v_add(struct vector v1, struct vector v2);
+struct vector v_sub(struct vector v1, struct vector v2);
+struct vector v_scalar_mul(double a,struct vector F);
+struct vector v_scalar_divide(double a,struct vector F);
+
+struct vector v_grad(double (*sf)(struct vector v),struct vector cv);
+double v_div(struct vector (*vf)(struct vector v),struct vector v);
+struct vector v_curl(struct vector (*vf)(struct vector v),struct vector cv);
 
 #endif
