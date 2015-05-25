@@ -8,16 +8,16 @@
 #include <math.h>
 #include "physics.h"
 #include "calculus.h"
-
-double f(double x)
-{
-	return sqrt(1-(x*x));	
-}
+#include "vector.h"
 
 int main()
 {
-	printf(" pi = %.55f\n",2*intergral(-1,1,f));
-	printf("rpi = 3.141592653589793238462643383279502884197169399375105\n");
+	struct vector a,b;
+	double c;
+	a.x = 1;a.y = 2;a.z = 3;
+	b.x = 4;b.y = -5;b.z = 6;
+	c = v_dot(a,b);
+	printf("c: %f \n",c);
 	return 0;
 }
 

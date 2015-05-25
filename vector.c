@@ -1,7 +1,7 @@
 #include "vector.h"
 #include "calculus.h"
 
-struct vector cross (struct vector u, struct vector v)
+struct vector v_cross(struct vector u, struct vector v)
 {
 	struct vector vec;
 	vec.x = (u.y*v.z) - (u.z*v.y);
@@ -10,7 +10,7 @@ struct vector cross (struct vector u, struct vector v)
 	return vec;
 }
 
-int dot(struct vector v1, struct vector v2)
+int v_dot(struct vector v1, struct vector v2)
 {
 	int ret=0;
 	ret+=(v1.x*v2.x);
@@ -81,9 +81,8 @@ struct vector v_grad(double (*sf)(struct vector v),struct vector cv)
 	return v;
 }
 
-double v_div(struct vector (*vf)(struct vector v),struct vector cv)
+struct vector v_del(struct vector (*vf)(struct vector v),struct vector cv)
 {
-	double ret;
 
 	struct vector v,tv = {0,0,0};
 	double L = limit(0);
@@ -104,14 +103,23 @@ double v_div(struct vector (*vf)(struct vector v),struct vector cv)
 
 	v = v_sub(tv,v);
 	v = v_scalar_divide(L,v);
+	return v;
+}
 
+double v_div(struct vector (*vf)(struct vector v),struct vector cv)
+{
+	double ret;
+	struct vector v;
+	v = v_del(vf,cv);
 	ret = v.x+v.y+v.z;
 	return ret;
 }
 
 struct vector v_curl(struct vector (*vf)(struct vector v),struct vector cv)
 {
-	struct vector v,iv;
-	/*TODO*/
+	struct vector v,tv = {0,0,0};
+	tv = vf(cv);
+	v = v_del(vf,cv);
+	tv = v_cross(v,tv);
 	return v;
 }

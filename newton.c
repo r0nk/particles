@@ -7,7 +7,7 @@
 
 const double G = 6.673E-11; /* gravitational constant */
 
-inline double r(double a, double b)
+double r(double a, double b)
 {
 	return (a-b)*abs(a-b);
 }
