@@ -10,9 +10,9 @@ struct vector v_cross(struct vector u, struct vector v)
 	return vec;
 }
 
-int v_dot(struct vector v1, struct vector v2)
+double v_dot(struct vector v1, struct vector v2)
 {
-	int ret=0;
+	double ret=0;
 	ret+=(v1.x*v2.x);
 	ret+=(v1.y*v2.y);
 	ret+=(v1.z*v2.z);

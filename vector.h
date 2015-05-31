@@ -6,7 +6,7 @@ struct vector {
 };
 
 struct vector v_cross (struct vector v1, struct vector v2);
-int v_dot(struct vector v1, struct vector v2);
+double v_dot(struct vector v1, struct vector v2);
 struct vector v_add(struct vector v1, struct vector v2);
 struct vector v_sub(struct vector v1, struct vector v2);
 struct vector v_scalar_mul(double a,struct vector F);
