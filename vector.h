@@ -16,4 +16,5 @@ struct vector v_grad(double (*sf)(struct vector v),struct vector cv);
 double v_div(struct vector (*vf)(struct vector v),struct vector v);
 struct vector v_curl(struct vector (*vf)(struct vector v),struct vector cv);
 
+struct vector v_displacement(struct vector a, struct vector b);/* radius */
 #endif
