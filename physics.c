@@ -1,4 +1,7 @@
 #include <stdio.h>
+
+#include "maxwells.h"
+#include "graphics.h"
 #include "calculus.h"
 #include "particle.h"
 #include "physics.h"
@@ -13,21 +16,41 @@ void init_physics()
 {
 	int i;
 	for(i=0;i<N_IONS;i++){
-		ions[i].l.x=800+(i*25);
-		ions[i].l.y=150;
-		ions[i].mass=1000;
+		ions[i].l.x=(i*25);
+		ions[i].l.y=0;
+		ions[i].mass=10000;
 		ions[i].velocity=(struct vector){0,0,0};
 	}
+	ions[0].charge=10000;
+	ions[1].charge=10000;
+	ions[2].charge=10000;
+	ions[2].l.y=50;
 }
 
 void dump_state()
 {
 	int i;
+	printf("--- IONS ---\n");
 	for(i=0;i<N_IONS;i++){
-		printf("ions[%i]: \n",i);
-		printf(" .x: %f \n",ions[i].l.x);
-		printf(" .y: %f \n",ions[i].l.y);
-		printf(" .z: %f \n",ions[i].l.z);
+		printf("[%i]\n",i);
+		v_print("location",ions[i].l);
+		v_print("velocity",ions[i].velocity);
+	}
+}
+
+void draw_state()
+{
+	/*clear the screen*/
+	cr=0;cb=0;cg=0;
+	draw_rectangle(0,0,1366,768);
+
+	int i;
+	cg=0x99; 
+	for(i=0;i<N_IONS;i++){
+		cr=0x99 - ions[i].charge;
+		cb=0x99 + ions[i].charge;
+
+		box((int)ions[i].l.x,(int)ions[i].l.y);
 	}
 }
 
@@ -37,6 +60,11 @@ void velocity(struct particle * p)
 	int i;
 	for(i=0;i<N_IONS;i++){
 		v = gravitation(ions[i],*p);
+		fv = v_add(v,fv);
+		v = coulombs(ions[i],*p);
+		fv = v_add(v,fv);
+		v = biotsavart(ions[i],*p);
+		v_print("biot-savart",v);
 		fv = v_add(v,fv);
 	}
 	/* because f/m=a */

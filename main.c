@@ -6,6 +6,8 @@
 #include <sys/ioctl.h>
 #include <readline/readline.h>
 #include <math.h>
+
+#include "graphics.h"
 #include "physics.h"
 #include "calculus.h"
 #include "vector.h"
@@ -13,6 +15,8 @@
 int main()
 {
 	init_physics();
+//	init_graphics();
+	dump_state();
 	while(1){
 		tick();
 		dump_state();

@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdio.h>
 
 #include "vector.h"
 #include "calculus.h"
@@ -129,8 +130,18 @@ struct vector v_curl(struct vector (*vf)(struct vector v),struct vector cv)
 struct vector v_displacement(struct vector a, struct vector b)
 {
 	struct vector v = {0,0,0};
-	v.x = (a.x-b.x)?(a.x-b.x)*fabs(a.x-b.x):0;
-	v.y = (a.y-b.y)?(a.y-b.y)*fabs(a.y-b.y):0;
-	v.z = (a.z-b.z)?(a.z-b.z)*fabs(a.z-b.z):0;
+	v.x = (b.x-a.x)?(b.x-a.x)/fabs(b.x-a.x):0;
+	v.y = (b.y-a.y)?(b.y-a.y)/fabs(b.y-a.y):0;
+	v.z = (b.z-a.z)?(b.z-a.z)/fabs(b.z-a.z):0;
 	return v;
 }
+
+void v_print(char * vname, struct vector v)
+{
+	printf("%s\n",vname);
+	printf(" x: %f",v.x);
+	printf(" y: %f",v.y);
+	printf(" z: %f",v.z);
+	printf("\n");
+}
+
