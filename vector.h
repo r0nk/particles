@@ -5,6 +5,9 @@ struct vector {
 	double x,y,z;
 };
 
+struct vector v_unit(struct vector v);
+
+double v_magnitude(struct vector v);
 struct vector v_cross (struct vector v1, struct vector v2);
 double v_dot(struct vector v1, struct vector v2);
 struct vector v_add(struct vector v1, struct vector v2);

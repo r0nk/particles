@@ -136,6 +136,22 @@ struct vector v_displacement(struct vector a, struct vector b)
 	return v;
 }
 
+double v_magnitude(struct vector v)
+{
+	return sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z));
+}
+
+struct vector v_unit(struct vector v)
+{
+	double m=v_magnitude(v);
+	if(m==0)
+		return (struct vector) {0,0,0};
+	v.x/=m;
+	v.y/=m;
+	v.z/=m;
+	return v;
+}
+
 void v_print(char * vname, struct vector v)
 {
 	printf("%s\n",vname);

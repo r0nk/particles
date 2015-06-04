@@ -8,7 +8,7 @@
 #include "newton.h"
 #include "vector.h"
 
-#define N_IONS 3
+#define N_IONS 2
 
 struct particle ions[N_IONS];
 
@@ -16,15 +16,13 @@ void init_physics()
 {
 	int i;
 	for(i=0;i<N_IONS;i++){
-		ions[i].l.x=(i*25);
-		ions[i].l.y=0;
-		ions[i].mass=10000;
-		ions[i].velocity=(struct vector){0,0,0};
+		ions[i].l.x=0;
+		ions[i].l.y=(i*25);
+		ions[i].l.z=0;
+		ions[i].mass=1000000;
+		ions[i].charge=100;
+		ions[i].velocity=(struct vector){(i*.000001),0,0};
 	}
-	ions[0].charge=10000;
-	ions[1].charge=10000;
-	ions[2].charge=10000;
-	ions[2].l.y=50;
 }
 
 void dump_state()
@@ -36,6 +34,7 @@ void dump_state()
 		v_print("location",ions[i].l);
 		v_print("velocity",ions[i].velocity);
 	}
+	printf("-----------\n");
 }
 
 void draw_state()
@@ -60,11 +59,13 @@ void velocity(struct particle * p)
 	int i;
 	for(i=0;i<N_IONS;i++){
 		v = gravitation(ions[i],*p);
+		v_print("gravitation",v);
 		fv = v_add(v,fv);
 		v = coulombs(ions[i],*p);
+		v_print("coulombs",v);
 		fv = v_add(v,fv);
 		v = biotsavart(ions[i],*p);
-		v_print("biot-savart",v);
+		v_print("biotsavart",v);
 		fv = v_add(v,fv);
 	}
 	/* because f/m=a */
@@ -79,6 +80,7 @@ void apply_vel(struct particle * p)
 	p->l = v_add(p->l,p->velocity);
 }
 
+/*TODO we need acceleration, as this isn't exactly accurate*/
 void tick()
 {
 	int i;
