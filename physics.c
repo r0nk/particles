@@ -2,7 +2,6 @@
 
 #include "maxwells.h"
 #include "graphics.h"
-#include "calculus.h"
 #include "particle.h"
 #include "physics.h"
 #include "newton.h"

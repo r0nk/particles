@@ -2,7 +2,6 @@
 
 #include "graphics.h"
 #include "physics.h"
-#include "calculus.h"
 #include "vector.h"
 
 int graphics = 1;

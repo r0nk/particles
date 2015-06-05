@@ -2,7 +2,6 @@
 #include <stdio.h>
 
 #include "vector.h"
-#include "calculus.h"
 
 struct vector v_cross(struct vector u, struct vector v)
 {
@@ -58,6 +57,7 @@ struct vector v_scalar_divide(double a,struct vector v1)
 	return v;
 }
 
+/*
 struct vector v_grad(double (*sf)(struct vector v),struct vector cv)
 {
 	struct vector v,tv = {0,0,0};
@@ -83,7 +83,9 @@ struct vector v_grad(double (*sf)(struct vector v),struct vector cv)
 	v = v_scalar_divide(L,v);
 	return v;
 }
+*/
 
+/*
 struct vector v_del(struct vector (*vf)(struct vector v),struct vector cv)
 {
 
@@ -108,7 +110,9 @@ struct vector v_del(struct vector (*vf)(struct vector v),struct vector cv)
 	v = v_scalar_divide(L,v);
 	return v;
 }
+*/
 
+/*
 double v_div(struct vector (*vf)(struct vector v),struct vector cv)
 {
 	double ret;
@@ -117,7 +121,9 @@ double v_div(struct vector (*vf)(struct vector v),struct vector cv)
 	ret = v.x+v.y+v.z;
 	return ret;
 }
+*/
 
+/*
 struct vector v_curl(struct vector (*vf)(struct vector v),struct vector cv)
 {
 	struct vector v,tv = {0,0,0};
@@ -126,6 +132,7 @@ struct vector v_curl(struct vector (*vf)(struct vector v),struct vector cv)
 	tv = v_cross(v,tv);
 	return v;
 }
+*/
 
 struct vector v_displacement(struct vector a, struct vector b)
 {
