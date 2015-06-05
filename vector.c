@@ -161,3 +161,12 @@ void v_print(char * vname, struct vector v)
 	printf("\n");
 }
 
+void v_printe(char * vname, struct vector v)
+{
+	printf("%s\n",vname);
+	printf(" x: %e",v.x);
+	printf(" y: %e",v.y);
+	printf(" z: %e",v.z);
+	printf("\n");
+}
+

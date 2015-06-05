@@ -1,27 +1,23 @@
-#include <unistd.h>
 #include <stdio.h>
-#include <stdint.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <sys/ioctl.h>
-#include <readline/readline.h>
-#include <math.h>
 
 #include "graphics.h"
 #include "physics.h"
 #include "calculus.h"
 #include "vector.h"
 
+int graphics = 1;
+
 int main()
 {
 	init_physics();
-//	init_graphics();
+	init_graphics();
 	dump_state();
 	while(1){
 		tick();
-		dump_state();
-		readline("~");
+//		dump_state();
+		draw();
 	}
+	deinit_graphics();
 	return 0;
 }
 

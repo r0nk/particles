@@ -1,89 +1,60 @@
-#include <math.h>
-#include <linux/fb.h>
+#include <GLFW/glfw3.h>
 #include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <sys/ioctl.h>
 
+#include "physics.h"
 #include "graphics.h"
 
-uint32_t pixel_color(uint8_t r, uint8_t g, uint8_t b, struct fb_var_screeninfo *vinfo)
+GLFWwindow * window;
+int window_width,window_height;
+
+void err_callback(int err, const char * description)
 {
-	return (r<<vinfo->red.offset) | (g<<vinfo->green.offset) | (b<<vinfo->blue.offset);
+	printf("err: %i , \"%s\"",err,description);
 }
 
-void init_graphics()
-{
-	int fb_fd = open("/dev/fb0",O_RDWR);
-
-	//Get variable screen information
-	ioctl(fb_fd, FBIOGET_VSCREENINFO, &vinfo);
-	vinfo.grayscale=0;
-	vinfo.bits_per_pixel=32;
-	ioctl(fb_fd, FBIOPUT_VSCREENINFO, &vinfo);
-	ioctl(fb_fd, FBIOGET_VSCREENINFO, &vinfo);
-
-	ioctl(fb_fd, FBIOGET_FSCREENINFO, &finfo);
-
-	long screensize = vinfo.yres_virtual * finfo.line_length;
-
-	fbp= mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
+int init_graphics(){
+	glfwSetErrorCallback(err_callback);
+	if(!glfwInit())
+		return -1;
+	window = glfwCreateWindow(500, 500, "particles", NULL, NULL);
+	if(!window)
+		return -1;
+	glfwMakeContextCurrent(window);
+	glfwGetFramebufferSize(window, &window_width, &window_height);
+	glViewport(0,0,window_width,window_height);
+	return 0;
 }
 
-long loc(int x, int y)
-{
-	return (x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (y+vinfo.yoffset) * finfo.line_length;
+void deinit_graphics(){
+	glfwTerminate();
 }
 
-void set_pixel(unsigned int x,unsigned int y, uint8_t r, uint8_t g , uint8_t b)
-{
-	/*TODO FIXME this is just my laptop resolution*/
-	if(x>1366 || y>760)
-		return;
-	*((uint32_t*)(fbp + loc(x,y))) = pixel_color(r,g,b, &vinfo);
-}
-
-void draw_rectangle(long x1, long y1, long x2 , long y2)
-{
-	long tmp;
-	if(x1>x2){
-		tmp=x1;
-		x1=x2;
-		x2=tmp;
-	}
-	if(y1>y2){
-		tmp=y1;
-		y1=y2;
-		y2=tmp;
-	}
-	tmp=y1;
-	for(;x1<x2;x1++)
-		for(y1=tmp;y1<y2;y1++)
-			set_pixel(x1,y1,cr,cg,cb);
-}
-
-void draw_line(int x1,int y1,int x2,int y2)
-{
-	int dx=abs(x2-x1),sx=x1<x2?1:-1;
-	int dy=abs(y2-y1),sy=y1<y2?1:-1;
-	int err=(dx>dy?dx:-dy)/2,e2;
-	while(!(x1==x2&&y1==y2)){
-		e2 = err;
-		if(e2>-dx){
-			err-=dy;
-			x1+=sx;
-		}
-		if(e2<dy){
-			err+=dx;
-			y1+=sy;
-		}
-		set_pixel(x1+500,y1+300,cr,cg,cb);
+void draw_polygons(){
+	int i;
+	float f = 50.0f;
+	for(i=0;i<N_IONS;i++){
+		glColor3f(-ions[i].charge,1.0f,1.0f);
+		glVertex3f(ions[i].l.x/f, ions[i].l.y/f, ions[i].l.z/f);
+		glVertex3f((ions[i].l.x+1)/f, ions[i].l.y/f, ions[i].l.z/f);
+		glVertex3f(ions[i].l.x/f, (ions[i].l.y+1)/f, ions[i].l.z/f);
+		glVertex3f(ions[i].l.x/f, ions[i].l.y/f, (ions[i].l.z+1)/f);
 	}
 }
 
-void box(int x,int y)
-{
-	draw_rectangle(x+498,y+298,x+502,y+302);
+void draw(){
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	float ratio= window_width / (float) window_height;
+	glOrtho(-ratio,ratio,-1.f,1.f,1.f,-1.f);
+	glMatrixMode(GL_MODELVIEW);
+
+	glBegin(GL_QUADS);
+	draw_polygons();
+	glEnd();
+
+	glfwSwapBuffers(window);
+	glfwPollEvents();
 }

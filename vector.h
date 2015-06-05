@@ -22,5 +22,6 @@ struct vector v_curl(struct vector (*vf)(struct vector v),struct vector cv);
 struct vector v_displacement(struct vector a, struct vector b);/* radius */
 
 void v_print(char * vname, struct vector v);
+void v_printe(char * vname, struct vector v);
 
 #endif
