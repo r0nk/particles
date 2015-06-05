@@ -1,7 +1,6 @@
 #include <stdio.h>
 
 #include "maxwells.h"
-#include "graphics.h"
 #include "particle.h"
 #include "physics.h"
 #include "newton.h"
@@ -20,8 +19,6 @@ void init_physics()
 		ions[i].charge=-500;
 		ions[i].velocity=(struct vector){i*0.03,0,0};
 	}
-	ions[0].mass=100000000;
-	ions[0].charge=10000*N_IONS;
 }
 
 void dump_state()
