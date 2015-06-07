@@ -162,18 +162,16 @@ struct vector v_unit(struct vector v)
 void v_print(char * vname, struct vector v)
 {
 	printf("%s\n",vname);
-	printf(" x: %f",v.x);
-	printf(" y: %f",v.y);
-	printf(" z: %f",v.z);
-	printf("\n");
+	printf(" x: %f\n",v.x);
+	printf(" y: %f\n",v.y);
+	printf(" z: %f\n",v.z);
 }
 
 void v_printe(char * vname, struct vector v)
 {
 	printf("%s\n",vname);
-	printf(" x: %e",v.x);
-	printf(" y: %e",v.y);
-	printf(" z: %e",v.z);
-	printf("\n");
+	printf(" x: %e\n",v.x);
+	printf(" y: %e\n",v.y);
+	printf(" z: %e\n",v.z);
 }
 

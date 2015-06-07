@@ -29,6 +29,7 @@ void dump_state()
 		printf("[%i]\n",i);
 		v_print("location",ions[i].l);
 		v_printe("velocity",ions[i].velocity);
+		v_printe("acceleration",ions[i].accel);
 	}
 	printf("-----------\n");
 }
@@ -50,15 +51,15 @@ void velocity(struct particle * p)
 	fv.x/=p->mass;
 	fv.y/=p->mass;
 	fv.z/=p->mass;
-	p->velocity = v_add(p->velocity,fv);
+	p->accel = fv;
 }
 
 void apply_vel(struct particle * p)
 {
+	p->velocity = v_add(p->accel,p->velocity);
 	p->l = v_add(p->l,p->velocity);
 }
 
-/*TODO we need acceleration, this isn't exactly accurate*/
 void tick()
 {
 	int i;

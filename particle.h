@@ -6,7 +6,8 @@ struct particle {
 	double mass;
 	double charge;
 	struct vector l;/* location */
-	struct vector velocity;/*gets added after every calc*/
+	struct vector velocity;
+	struct vector accel;
 };
 
 #endif
